@@ -26,7 +26,7 @@ def sort_table(table, x, n):
     return sorted(table, key=sort_key)[:n]
 
 
-def communication(a, b, function):
+def communication(a, b, function, isBack):
     while True:
         print("")
         print("Введите количество элементов в таблице:")
@@ -44,8 +44,14 @@ def communication(a, b, function):
             print("Значение n должно быть меньше", m, "! Введите n повторно:")
             n = int(input())
 
-        print("Введите точку интерполяции x:")
-        x = float(input())
+        if not isBack:
+            print("Введите точку x:")
+            x = float(input())
+        else:
+            print("Введите значение F для задачи обратного интерполирования:")
+            x = float(input())
+            for row in table:
+                row[0], row[1] = row[1], row[0]
 
         print("Таблица с", n + 1, "ближайшими к точке ", x, " значениями:")
         newTable = sort_table(table, x, n + 1)
@@ -62,7 +68,10 @@ def communication(a, b, function):
         p_newton = create_polynomial_newton_method(newTable, differences)
         result = p_newton(x)
         print("Ответ: ", result)
-        print("Фактическая погрешность: ", abs(function(x) - result))
+        if not isBack:
+            print("Фактическая погрешность: ", abs(function(x) - result))
+        else:
+            print("Фактическая погрешность: ", abs(function(result) - x))
 
         # Метод Лагранжа
         print()
@@ -70,7 +79,10 @@ def communication(a, b, function):
         p_lagrange = create_polynomial_lagrange_method(newTable)
         result = p_lagrange(x)
         print("Ответ: ", result)
-        print("Фактическая погрешность: ", abs(function(x) - result))
+        if not isBack:
+            print("Фактическая погрешность: ", abs(function(x) - result))
+        else:
+            print("Фактическая погрешность: ", abs(function(result) - x))
 
         print("Продолжить? (y - да, n - нет)")
         answer = input()
@@ -80,10 +92,10 @@ def communication(a, b, function):
 
 if __name__ == "__main__":
     print()
-    print("Лабораторная работа номер 1: 'ЗАДАЧА АЛГЕБРАИЧЕСКОГО ИНТЕРПОЛИРОВАНИЯ'")
+    print("Лабораторная работа номер 2: 'ЗАДАЧА АЛГЕБРАИЧЕСКОГО ИНТЕРПОЛИРОВАНИЯ'")
     print("Вариант 4")
     print("Исходные данные:")
     print("     f(x) = sqrt(1 - x^2)")
     print("     [0; 0.7]")
 
-    communication(0, 0.7, func)
+    communication(0, 0.7, func, False)
