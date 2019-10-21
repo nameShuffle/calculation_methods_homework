@@ -26,7 +26,7 @@ def sort_table(table, x, n):
     return sorted(table, key=sort_key)[:n]
 
 
-def communication(a, b, function, isBack):
+def communication(a, b, function):
     while True:
         print("")
         print("Введите количество элементов в таблице:")
@@ -43,16 +43,8 @@ def communication(a, b, function, isBack):
         while n > m:
             print("Значение n должно быть меньше", m, "! Введите n повторно:")
             n = int(input())
-
-        if not isBack:
-            print("Введите точку x:")
-            x = float(input())
-        else:
-            print("Введите значение F для задачи обратного интерполирования:")
-            x = float(input())
-            for row in table:
-                row[0], row[1] = row[1], row[0]
-
+        print("Введите точку x:")
+        x = float(input())
         print("Таблица с", n + 1, "ближайшими к точке ", x, " значениями:")
         newTable = sort_table(table, x, n + 1)
         for row in newTable:
@@ -68,10 +60,7 @@ def communication(a, b, function, isBack):
         p_newton = create_polynomial_newton_method(newTable, differences)
         result = p_newton(x)
         print("Ответ: ", result)
-        if not isBack:
-            print("Фактическая погрешность: ", abs(function(x) - result))
-        else:
-            print("Фактическая погрешность: ", abs(function(result) - x))
+        print("Фактическая погрешность: ", abs(function(x) - result))
 
         # Метод Лагранжа
         print()
@@ -79,10 +68,7 @@ def communication(a, b, function, isBack):
         p_lagrange = create_polynomial_lagrange_method(newTable)
         result = p_lagrange(x)
         print("Ответ: ", result)
-        if not isBack:
-            print("Фактическая погрешность: ", abs(function(x) - result))
-        else:
-            print("Фактическая погрешность: ", abs(function(result) - x))
+        print("Фактическая погрешность: ", abs(function(result) - x))
 
         print("Продолжить? (y - да, n - нет)")
         answer = input()
