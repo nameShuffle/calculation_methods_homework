@@ -5,7 +5,7 @@ from integral.simpson import simpson
 
 
 def f(x):
-    return sin(x) - 2 * (x ** 2)
+    return cos(x)
 
 
 def w(x):
@@ -13,14 +13,14 @@ def w(x):
 
 
 def integral(x):
-    return - cos(x) - 2 * (x ** 3) / 3
+    return sin(x)
 
 
 if __name__ == "__main__":
     print()
     print("Лабораторная работа номер 4: 'ПРИБЛИЖЕННОЕ ВЫЧИСЛЕНИЕ ИНТЕГРАЛА ПО СОСТАВНЫМ КВАДРАТУРНЫМ ФОРМУЛАМ'")
     print("Исходные параметры:")
-    print("     f(x) = sin(x) - 2x^2")
+    print("     f(x) = cos(x)")
     print()
 
     a = float(input("Введите значение A: "))
@@ -31,6 +31,10 @@ if __name__ == "__main__":
     print("Точное значение интеграла по конечному промежутку [", a, ", ", b, "]: ", j)
 
     h = (b - a) / m
+
+    m1 = 1
+    m2 = 1
+    m4 = 1
 
     z_points = []
     f_z_values = []
@@ -49,6 +53,8 @@ if __name__ == "__main__":
     answer = left_rectangles(h, f_z_values)
     print("Ответ: ", answer)
     print("Абсолютная фактическая погрешность: ", abs(j - answer))
+    R_m = 1 / 2 * (b - a) * h * m1
+    print("Ожидаемая теоретическая погрешность R_m(f) <= ", R_m)
 
     print()
     if m == 1:
@@ -58,6 +64,8 @@ if __name__ == "__main__":
     answer = right_rectangles(h, f_z_values)
     print("Ответ: ", answer)
     print("Абсолютная фактическая погрешность: ", abs(j - answer))
+    R_m = 1 / 2 * (b - a) * h * m1
+    print("Ожидаемая теоретическая погрешность R_m(f) <= ", R_m)
 
     print()
     if m == 1:
@@ -67,6 +75,8 @@ if __name__ == "__main__":
     answer = medium_rectangles(h, f_z_plus_half_h_values)
     print("Ответ: ", answer)
     print("Абсолютная фактическая погрешность: ", abs(j - answer))
+    R_m = 1 / 24 * (b - a) * (h ** 2) * m2
+    print("Ожидаемая теоретическая погрешность R_m(f) <= ", R_m)
 
     print()
     if m == 1:
@@ -76,6 +86,8 @@ if __name__ == "__main__":
     answer = trapeze(h, f_z_values)
     print("Ответ: ", answer)
     print("Абсолютная фактическая погрешность: ", abs(j - answer))
+    R_m = 1 / 12 * (b - a) * (h ** 2) * m2
+    print("Ожидаемая теоретическая погрешность R_m(f) <= ", R_m)
 
     print()
     if m == 1:
@@ -85,6 +97,9 @@ if __name__ == "__main__":
     answer = simpson(h, f_z_values, f_z_plus_half_h_values)
     print("Ответ: ", answer)
     print("Абсолютная фактическая погрешность: ", abs(j - answer))
+    R_m = 1 / 2880 * (b - a) * (h ** 4) * m4
+    print("Ожидаемая теоретическая погрешность R_m(f) <= ", R_m)
+
 
 
 
