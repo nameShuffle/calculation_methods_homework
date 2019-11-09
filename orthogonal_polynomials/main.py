@@ -5,7 +5,7 @@ from orthogonal_polynomials.lagrange_polynomial import find_lagrange_polynomial
 from orthogonal_polynomials.сhebyshev_polynomial import find_chebyshev_polynomial
 from orthogonal_polynomials.chebyshev_hermite_polynomial import find_chebyshev_hermite_polynomial
 from orthogonal_polynomials.chebyshev_lagerr_polynomial import find_chebyshev_lagerr_polynomial
-from orthogonal_polynomials.draw import draw_graph, create_points
+from orthogonal_polynomials.draw import draw_graph, create_points, draw_two_graphs
 
 
 if __name__ == "__main__":
@@ -43,8 +43,14 @@ if __name__ == "__main__":
     print("Проверка:")
     for point in extremum_points:
         print("T_", n, "(", point, ") = ", chebyshev_polynomial(point))
-    x, y = create_points(-1, 1, 100, chebyshev_polynomial)
-    draw_graph(x, y, "Многочлен Чебышева")
+    x1, y1 = create_points(-1, 1, 100, chebyshev_polynomial)
+    #draw_graph(x, y, "Многочлен Чебышева")
+    
+    def redused_t_n(x):
+        return chebyshev_polynomial(x) / (2 ** (n - 1))
+    x2, y2 = create_points(-1, 1, 100, redused_t_n)
+    #draw_graph(x, y, "Приведенный многочлен Чебышева")
+    draw_two_graphs(x1, y1, x2, y2, "Многочлены Чебышева")
 
     print()
     print("МНОГОЧЛЕН ЧЕБЫШЕВА-ЭРМИТА")
